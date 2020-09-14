@@ -37,7 +37,7 @@ app.get('/api/v1/restaurants', async (req, res) => {
 app.get('/api/v1/restaurants/:id', async (req, res) => {
 
     try{
-        const {rows} = await db.query('SELECT * FROM restaurants WHERE id = $1', [req.params.id]);
+        const {rows} = await db.query('SELECT * FROM restaurant WHERE id = $1', [req.params.id]);
         console.log(req.params);
          res.status(200).json({
              status:"sucess",
@@ -57,7 +57,7 @@ app.post('/api/v1/restaurants/', async (req, res) => {
     try{
         console.log(req.body);
         const { rows } = await db.query(
-            'INSERT INTO restaurants (name, location, price_range) VALUES ($1, $2, $3) returning *', 
+            'INSERT INTO restaurant (name, location, price_range) VALUES ($1, $2, $3) returning *', 
             [req.body.name, req.body.location, req.body.price_range]);
          res.status(201).json({
              status:"sucess",
@@ -78,7 +78,7 @@ app.put('/api/v1/restaurants/:id', async (req, res) => {
     try{
         console.log(req.body);
         const {rowCount, rows} = await db.query(
-            'UPDATE restaurants SET name = $1, location = $2, price_range = $3 WHERE id = $4 returning *', 
+            'UPDATE restaurant SET name = $1, location = $2, price_range = $3 WHERE id = $4 returning *', 
             [req.body.name, req.body.location, req.body.price_range, req.params.id]);
         if(rowCount === 1){
             res.status(201).json({
@@ -105,7 +105,7 @@ app.delete('/api/v1/restaurants/:id', async (req, res) => {
     try{
         console.log(req.body);
         const { rowCount, rows } = await db.query(
-            'DELETE FROM restaurants WHERE id=$1', [req.params.id]);
+            'DELETE FROM restaurant WHERE id=$1', [req.params.id]);
         if(rowCount === 1){
             res.status(201).json({
                 status:"sucess",
